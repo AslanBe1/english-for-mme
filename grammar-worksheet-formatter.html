@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mashq Bezash — Grammatika varag'i</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap');
+
+:root{
+  --paper:#FBF7EF;
+  --paper-line:#D8E1EA;
+  --ink:#20293D;
+  --ink-soft:#5B6478;
+  --red:#B23A48;
+  --red-soft:#E7C8CB;
+  --gold:#E8B23D;
+  --card:#ffffff;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    repeating-linear-gradient(var(--paper) 0px, var(--paper) 33px, var(--paper-line) 34px);
+  background-color:var(--paper);
+  font-family:'Inter',sans-serif;
+  color:var(--ink);
+  min-height:100vh;
+  padding:32px 16px 80px;
+}
+
+.wrap{max-width:760px;margin:0 auto;}
+
+.app-header{
+  text-align:center;
+  margin-bottom:28px;
+}
+.app-header h1{
+  font-family:'Lora',serif;
+  font-weight:700;
+  font-size:28px;
+  margin:0 0 6px;
+  letter-spacing:-0.3px;
+}
+.app-header p{
+  color:var(--ink-soft);
+  font-size:14px;
+  margin:0;
+}
+
+.input-card{
+  background:var(--card);
+  border-radius:14px;
+  box-shadow:0 1px 3px rgba(32,41,61,0.08), 0 8px 24px rgba(32,41,61,0.06);
+  padding:20px;
+  margin-bottom:22px;
+}
+.input-card label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink-soft);
+  margin-bottom:8px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+textarea{
+  width:100%;
+  min-height:180px;
+  border:1.5px solid #E6E1D6;
+  border-radius:10px;
+  padding:12px 14px;
+  font-family:'Inter',sans-serif;
+  font-size:14.5px;
+  line-height:1.6;
+  color:var(--ink);
+  resize:vertical;
+  background:#FFFDF9;
+}
+textarea:focus{outline:none;border-color:var(--red);}
+
+.btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+button{
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  font-size:14px;
+  border:none;
+  border-radius:9px;
+  padding:11px 18px;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+button:active{transform:translateY(1px);}
+.btn-primary{background:var(--red);color:#fff;box-shadow:0 4px 12px rgba(178,58,72,0.28);}
+.btn-primary:hover{box-shadow:0 6px 16px rgba(178,58,72,0.35);}
+.btn-secondary{background:#F1ECE0;color:var(--ink);}
+.btn-secondary:hover{background:#E9E2D2;}
+
+.sheet{display:none;}
+.sheet.show{display:block;}
+
+.sheet-title{
+  font-family:'Lora',serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:24px;
+  margin:0 0 18px;
+  padding-bottom:10px;
+  border-bottom:2px solid var(--ink);
+  display:inline-block;
+}
+
+.section-block{margin-bottom:30px;}
+
+.q-card{
+  position:relative;
+  background:var(--card);
+  border-radius:12px;
+  padding:16px 18px 16px 54px;
+  margin-bottom:12px;
+  box-shadow:0 1px 2px rgba(32,41,61,0.06), 0 4px 14px rgba(32,41,61,0.05);
+  border-left:4px solid var(--red);
+}
+.q-num{
+  position:absolute;
+  left:14px;
+  top:16px;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:var(--ink);
+  color:#fff;
+  font-family:'Lora',serif;
+  font-weight:600;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.q-text{font-size:15.5px;line-height:2.1;}
+
+.blank-wrap{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  margin:0 3px;
+  vertical-align:baseline;
+}
+.blank-input{
+  border:none;
+  border-bottom:2px solid var(--ink);
+  background:transparent;
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  font-weight:600;
+  color:var(--red);
+  text-align:center;
+  width:110px;
+  padding:2px 2px 3px;
+}
+.blank-input:focus{outline:none;border-bottom-color:var(--red);}
+.hint{
+  font-family:'Caveat',cursive;
+  font-size:16px;
+  color:var(--red-soft);
+  color:var(--red);
+  opacity:.75;
+  line-height:1;
+  margin-top:1px;
+  transform:rotate(-2deg);
+}
+
+.opts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+.opt-btn{
+  background:#F6F3EA;
+  border:1.5px solid #E6E1D6;
+  border-radius:8px;
+  padding:7px 14px;
+  font-size:13.5px;
+  font-weight:600;
+  color:var(--ink);
+  cursor:pointer;
+  font-family:'Inter',sans-serif;
+}
+.opt-btn .letter{
+  display:inline-block;
+  color:var(--ink-soft);
+  margin-right:6px;
+}
+.opt-btn.selected{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#3A2C05;
+}
+
+.plain-line{
+  font-size:14px;
+  color:var(--ink-soft);
+  font-style:italic;
+  margin:10px 0 6px;
+}
+
+.empty-hint{
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:13.5px;
+  padding:30px 10px;
+}
+
+@media print{
+  body{background:#fff;padding:0;}
+  .input-card,.btn-row,.app-header p{display:none;}
+  .q-card{box-shadow:none;border:1px solid #ddd;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="app-header">
+    <h1>✏️ Mashq Bezash</h1>
+    <p>Matnni joylashtiring — sayt uni chiroyli, tuzilgan mashq varag'iga aylantiradi</p>
+  </div>
+
+  <div class="input-card">
+    <label for="raw">Xom matn (savollarni joylashtiring)</label>
+    <textarea id="raw" placeholder="Matnni shu yerga joylashtiring..."></textarea>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="render()">✨ Chiroyli qilish</button>
+      <button class="btn-secondary" onclick="printSheet()">🖨️ Chop etish</button>
+      <button class="btn-secondary" onclick="clearAll()">🗑️ Tozalash</button>
+    </div>
+  </div>
+
+  <div id="sheet" class="sheet"></div>
+</div>
+
+<script>
+const SAMPLE = `Zero & First Conditionals
+If you ________ (heat) ice, it ________ (melt).
+If she ________ (study) hard, she will pass the exam.
+If people ________ (not drink) enough water, they become thirsty.
+If it ________ (rain) tomorrow, we will stay at home.
+If you ________ (mix) blue and yellow, you get green.
+If my father ________ (finish) work early, we will go to the cinema.
+If babies ________ (be) hungry, they cry.
+If I ________ (see) Tom later, I will tell him the news.
+If you ________ (not water) plants, they die.
+If they ________ (leave) now, they will arrive on time.
+📝 Exercise 2 – Choose the correct answer
+If you press this button, the machine ________. A) starts B) will start C) started
+If I finish my homework, I ________ TV. A) watch B) will watch C) watched
+If water reaches 100°C, it ________. A) boils B) will boil C) boiled
+If she doesn't hurry, she ________ the bus. A) misses B) will miss C) missed`;
+
+document.getElementById('raw').value = SAMPLE;
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function isMCQ(line){
+  return /\bA\)/.test(line) && /\bB\)/.test(line);
+}
+function isBlankLine(line){
+  return /_{3,}/.test(line);
+}
+function isHeading(line){
+  // short line, no blanks, no question mark ending typical sentence, or contains 'Exercise'
+  return !isMCQ(line) && !isBlankLine(line);
+}
+
+function buildBlankHtml(line, qIndex){
+  let i = 0;
+  const html = escapeHtml(line).replace(/_{3,}\s*\(([^)]+)\)/g, (m, hint) => {
+    i++;
+    return `<span class="blank-wrap">
+      <input class="blank-input" data-q="${qIndex}" data-b="${i}" placeholder="…">
+      <span class="hint">(${escapeHtml(hint)})</span>
+    </span>`;
+  });
+  return html;
+}
+
+function buildMcqHtml(line){
+  const parts = line.split(/(?=[A-D]\))/);
+  const stem = parts[0].trim();
+  const opts = parts.slice(1).map(p => {
+    const m = p.match(/^([A-D])\)\s*(.*)$/s);
+    return m ? {letter:m[1], text:m[2].trim()} : null;
+  }).filter(Boolean);
+  const stemHtml = escapeHtml(stem).replace(/_{3,}/, '<span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:70px;">&nbsp;</span>');
+  const optsHtml = opts.map(o =>
+    `<button type="button" class="opt-btn" onclick="selectOpt(this)"><span class="letter">${o.letter})</span>${escapeHtml(o.text)}</button>`
+  ).join('');
+  return `<div class="q-text">${stemHtml}</div><div class="opts">${optsHtml}</div>`;
+}
+
+function selectOpt(btn){
+  const group = btn.parentElement;
+  group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function render(){
+  const raw = document.getElementById('raw').value.trim();
+  const sheetEl = document.getElementById('sheet');
+  if(!raw){
+    sheetEl.innerHTML = '<div class="empty-hint">Avval matnni joylashtiring 🙂</div>';
+    sheetEl.classList.add('show');
+    return;
+  }
+  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+
+  let out = '';
+  let qCount = 0;
+  let sectionOpen = false;
+
+  lines.forEach(line => {
+    if(isMCQ(line)){
+      qCount++;
+      out += `<div class="q-card"><div class="q-num">${qCount}</div>${buildMcqHtml(line)}</div>`;
+    } else if(isBlankLine(line)){
+      qCount++;
+      out += `<div class="q-card"><div class="q-num">${qCount}</div><div class="q-text">${buildBlankHtml(line, qCount)}</div></div>`;
+    } else {
+      // heading / section title / plain note
+      const cleaned = line.replace(/^📝\s*/, '');
+      if(!sectionOpen){
+        out += `<div class="sheet-title">${escapeHtml(cleaned)}</div>`;
+        sectionOpen = true;
+      } else {
+        qCount = 0; // reset numbering for new section
+        out += `</div><div class="section-block"><div class="plain-line">${escapeHtml(cleaned)}</div>`;
+      }
+    }
+  });
+
+  sheetEl.innerHTML = `<div class="section-block">${out}</div>`;
+  sheetEl.classList.add('show');
+}
+
+function clearAll(){
+  document.getElementById('raw').value = '';
+  const sheetEl = document.getElementById('sheet');
+  sheetEl.innerHTML = '';
+  sheetEl.classList.remove('show');
+}
+
+function printSheet(){
+  window.print();
+}
+
+render();
+</script>
+</body>
+</html>
