@@ -3,361 +3,387 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mashq Bezash — Grammatika varag'i</title>
+<title>Mashq Yasovchi — Grammatika mashqlarini chiroyli qiling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap');
+  :root{
+    --paper: #FAF6EC;
+    --paper-2: #F3EDDD;
+    --ink: #26241E;
+    --ink-soft: #55523F;
+    --rule: #DCD2B4;
+    --green: #33604D;
+    --green-dark: #234337;
+    --gold: #C79A3E;
+    --gold-soft: #F1E0AF;
+    --red: #B23A48;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(var(--paper) 0px, var(--paper) 33px, var(--rule) 34px),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding:0 0 60px 0;
+  }
+  .binder{
+    position:fixed;
+    left:0; top:0; bottom:0;
+    width:46px;
+    background:var(--green-dark);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:70px;
+    gap:26px;
+    z-index:5;
+  }
+  .binder .hole{
+    width:16px; height:16px;
+    border-radius:50%;
+    background:var(--paper);
+    box-shadow: inset 0 2px 3px rgba(0,0,0,.35);
+  }
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:48px 28px 0 74px;
+  }
+  header{
+    margin-bottom:34px;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:18px;
+  }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:12px;
+    color:var(--green);
+    margin-bottom:8px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:40px;
+    margin:0 0 8px 0;
+    line-height:1.05;
+    color:var(--ink);
+  }
+  h1 span{ color:var(--green); font-style:italic; font-weight:600;}
+  .sub{
+    color:var(--ink-soft);
+    font-size:15.5px;
+    max-width:560px;
+  }
+  .panel{
+    background:var(--paper-2);
+    border:2px solid var(--ink);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:5px 5px 0 var(--ink);
+    margin-bottom:34px;
+  }
+  .panel label{
+    display:block;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--green-dark);
+    margin-bottom:8px;
+  }
+  textarea{
+    width:100%;
+    min-height:170px;
+    resize:vertical;
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    line-height:1.55;
+    padding:14px;
+    border:1.5px solid var(--rule);
+    border-radius:10px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  textarea:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+  .btnrow{
+    display:flex;
+    gap:12px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border-radius:9px;
+    padding:11px 20px;
+    cursor:pointer;
+    border:2px solid var(--ink);
+    transition:transform .12s ease;
+  }
+  button:active{ transform:translateY(2px); }
+  .btn-primary{ background:var(--green); color:#fff; border-color:var(--green-dark);}
+  .btn-primary:hover{ background:var(--green-dark); }
+  .btn-ghost{ background:transparent; color:var(--ink); }
+  .btn-ghost:hover{ background:var(--rule); }
+  .empty-hint{
+    color:var(--ink-soft);
+    font-size:13.5px;
+    margin-top:10px;
+  }
 
-:root{
-  --paper:#FBF7EF;
-  --paper-line:#D8E1EA;
-  --ink:#20293D;
-  --ink-soft:#5B6478;
-  --red:#B23A48;
-  --red-soft:#E7C8CB;
-  --gold:#E8B23D;
-  --card:#ffffff;
-}
+  #output{ display:none; }
+  .section-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:22px;
+    margin:38px 0 16px 0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-title .tag{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    background:var(--ink);
+    color:var(--paper);
+    padding:4px 9px;
+    border-radius:6px;
+    letter-spacing:.05em;
+  }
+  .card{
+    background:#fff;
+    border:1.5px solid var(--rule);
+    border-left:5px solid var(--green);
+    border-radius:10px;
+    padding:16px 18px;
+    margin-bottom:12px;
+    font-size:16px;
+    line-height:1.9;
+  }
+  .card.mcq{ border-left-color:var(--gold); }
+  .qnum{
+    font-family:'Space Mono',monospace;
+    color:var(--green-dark);
+    font-weight:700;
+    margin-right:6px;
+  }
+  .card.mcq .qnum{ color:#8a6a1f; }
 
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  background:
-    repeating-linear-gradient(var(--paper) 0px, var(--paper) 33px, var(--paper-line) 34px);
-  background-color:var(--paper);
-  font-family:'Inter',sans-serif;
-  color:var(--ink);
-  min-height:100vh;
-  padding:32px 16px 80px;
-}
+  .blank-input{
+    font-family:'Space Mono', monospace;
+    font-size:15px;
+    width:130px;
+    padding:4px 8px;
+    border:none;
+    border-bottom:2.5px solid var(--green);
+    background:var(--gold-soft);
+    border-radius:4px 4px 0 0;
+    text-align:center;
+    color:var(--ink);
+  }
+  .blank-input:focus{ outline:none; background:#fff3d0; }
+  .hint{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:0 3px 0 3px;
+  }
 
-.wrap{max-width:760px;margin:0 auto;}
+  .options{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:8px;
+  }
+  .opt-btn{
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    font-weight:500;
+    background:var(--paper);
+    border:1.8px solid var(--ink);
+    border-radius:8px;
+    padding:8px 14px;
+    cursor:pointer;
+  }
+  .opt-btn:hover{ background:var(--gold-soft); }
+  .opt-btn.selected{
+    background:var(--gold);
+    border-color:#8a6a1f;
+    color:#fff;
+  }
+  .opt-letter{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    margin-right:6px;
+  }
 
-.app-header{
-  text-align:center;
-  margin-bottom:28px;
-}
-.app-header h1{
-  font-family:'Lora',serif;
-  font-weight:700;
-  font-size:28px;
-  margin:0 0 6px;
-  letter-spacing:-0.3px;
-}
-.app-header p{
-  color:var(--ink-soft);
-  font-size:14px;
-  margin:0;
-}
-
-.input-card{
-  background:var(--card);
-  border-radius:14px;
-  box-shadow:0 1px 3px rgba(32,41,61,0.08), 0 8px 24px rgba(32,41,61,0.06);
-  padding:20px;
-  margin-bottom:22px;
-}
-.input-card label{
-  display:block;
-  font-size:13px;
-  font-weight:600;
-  color:var(--ink-soft);
-  margin-bottom:8px;
-  text-transform:uppercase;
-  letter-spacing:0.04em;
-}
-textarea{
-  width:100%;
-  min-height:180px;
-  border:1.5px solid #E6E1D6;
-  border-radius:10px;
-  padding:12px 14px;
-  font-family:'Inter',sans-serif;
-  font-size:14.5px;
-  line-height:1.6;
-  color:var(--ink);
-  resize:vertical;
-  background:#FFFDF9;
-}
-textarea:focus{outline:none;border-color:var(--red);}
-
-.btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
-button{
-  font-family:'Inter',sans-serif;
-  font-weight:600;
-  font-size:14px;
-  border:none;
-  border-radius:9px;
-  padding:11px 18px;
-  cursor:pointer;
-  transition:transform .12s ease, box-shadow .12s ease;
-}
-button:active{transform:translateY(1px);}
-.btn-primary{background:var(--red);color:#fff;box-shadow:0 4px 12px rgba(178,58,72,0.28);}
-.btn-primary:hover{box-shadow:0 6px 16px rgba(178,58,72,0.35);}
-.btn-secondary{background:#F1ECE0;color:var(--ink);}
-.btn-secondary:hover{background:#E9E2D2;}
-
-.sheet{display:none;}
-.sheet.show{display:block;}
-
-.sheet-title{
-  font-family:'Lora',serif;
-  font-weight:700;
-  font-style:italic;
-  font-size:24px;
-  margin:0 0 18px;
-  padding-bottom:10px;
-  border-bottom:2px solid var(--ink);
-  display:inline-block;
-}
-
-.section-block{margin-bottom:30px;}
-
-.q-card{
-  position:relative;
-  background:var(--card);
-  border-radius:12px;
-  padding:16px 18px 16px 54px;
-  margin-bottom:12px;
-  box-shadow:0 1px 2px rgba(32,41,61,0.06), 0 4px 14px rgba(32,41,61,0.05);
-  border-left:4px solid var(--red);
-}
-.q-num{
-  position:absolute;
-  left:14px;
-  top:16px;
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:var(--ink);
-  color:#fff;
-  font-family:'Lora',serif;
-  font-weight:600;
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.q-text{font-size:15.5px;line-height:2.1;}
-
-.blank-wrap{
-  display:inline-flex;
-  flex-direction:column;
-  align-items:center;
-  margin:0 3px;
-  vertical-align:baseline;
-}
-.blank-input{
-  border:none;
-  border-bottom:2px solid var(--ink);
-  background:transparent;
-  font-family:'Inter',sans-serif;
-  font-size:15px;
-  font-weight:600;
-  color:var(--red);
-  text-align:center;
-  width:110px;
-  padding:2px 2px 3px;
-}
-.blank-input:focus{outline:none;border-bottom-color:var(--red);}
-.hint{
-  font-family:'Caveat',cursive;
-  font-size:16px;
-  color:var(--red-soft);
-  color:var(--red);
-  opacity:.75;
-  line-height:1;
-  margin-top:1px;
-  transform:rotate(-2deg);
-}
-
-.opts{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:10px;
-}
-.opt-btn{
-  background:#F6F3EA;
-  border:1.5px solid #E6E1D6;
-  border-radius:8px;
-  padding:7px 14px;
-  font-size:13.5px;
-  font-weight:600;
-  color:var(--ink);
-  cursor:pointer;
-  font-family:'Inter',sans-serif;
-}
-.opt-btn .letter{
-  display:inline-block;
-  color:var(--ink-soft);
-  margin-right:6px;
-}
-.opt-btn.selected{
-  background:var(--gold);
-  border-color:var(--gold);
-  color:#3A2C05;
-}
-
-.plain-line{
-  font-size:14px;
-  color:var(--ink-soft);
-  font-style:italic;
-  margin:10px 0 6px;
-}
-
-.empty-hint{
-  text-align:center;
-  color:var(--ink-soft);
-  font-size:13.5px;
-  padding:30px 10px;
-}
-
-@media print{
-  body{background:#fff;padding:0;}
-  .input-card,.btn-row,.app-header p{display:none;}
-  .q-card{box-shadow:none;border:1px solid #ddd;}
-}
+  footer{
+    margin-top:44px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+  @media (max-width:600px){
+    .binder{ width:26px; }
+    .binder .hole{ width:10px; height:10px; }
+    .wrap{ padding-left:44px; padding-right:16px; }
+    h1{ font-size:30px; }
+  }
 </style>
 </head>
 <body>
+
+<div class="binder" id="binder"></div>
+
 <div class="wrap">
+  <header>
+    <div class="eyebrow">Mashq Yasovchi · Ish daftari</div>
+    <h1>Matnni <span>chiroyli mashqqa</span> aylantiring</h1>
+    <p class="sub">Grammatika mashqini pastga joylashtiring — bo'sh joylar kirituvchi maydonchalarga, A/B/C variantlar esa bosiladigan tugmalarga aylanadi.</p>
+  </header>
 
-  <div class="app-header">
-    <h1>✏️ Mashq Bezash</h1>
-    <p>Matnni joylashtiring — sayt uni chiroyli, tuzilgan mashq varag'iga aylantiradi</p>
-  </div>
-
-  <div class="input-card">
-    <label for="raw">Xom matn (savollarni joylashtiring)</label>
-    <textarea id="raw" placeholder="Matnni shu yerga joylashtiring..."></textarea>
-    <div class="btn-row">
-      <button class="btn-primary" onclick="render()">✨ Chiroyli qilish</button>
-      <button class="btn-secondary" onclick="printSheet()">🖨️ Chop etish</button>
-      <button class="btn-secondary" onclick="clearAll()">🗑️ Tozalash</button>
+  <div class="panel">
+    <label for="raw">Mashq matni</label>
+    <textarea id="raw" placeholder="Mashq matnini shu yerga joylashtiring..."></textarea>
+    <div class="btnrow">
+      <button class="btn-primary" onclick="build()">✨ Chiroyli qilish</button>
+      <button class="btn-ghost" onclick="loadExample()">Namuna matnni yuklash</button>
+      <button class="btn-ghost" onclick="clearAll()">Tozalash</button>
     </div>
+    <div class="empty-hint">Bo'sh joylar uchun <b>________</b> va qavs ichida fe'l <b>(heat)</b> shaklidan, savol variantlari uchun <b>A) ... B) ... C) ...</b> shaklidan foydalaning.</div>
   </div>
 
-  <div id="sheet" class="sheet"></div>
+  <div id="output"></div>
+  <footer>Har bir savolni o'zingiz yechib ko'ring — variant tanlaganingizda yoki javob yozganingizda belgilanadi.</footer>
 </div>
 
 <script>
-const SAMPLE = `Zero & First Conditionals
-If you ________ (heat) ice, it ________ (melt).
-If she ________ (study) hard, she will pass the exam.
-If people ________ (not drink) enough water, they become thirsty.
-If it ________ (rain) tomorrow, we will stay at home.
-If you ________ (mix) blue and yellow, you get green.
-If my father ________ (finish) work early, we will go to the cinema.
-If babies ________ (be) hungry, they cry.
-If I ________ (see) Tom later, I will tell him the news.
-If you ________ (not water) plants, they die.
-If they ________ (leave) now, they will arrive on time.
-📝 Exercise 2 – Choose the correct answer
-If you press this button, the machine ________. A) starts B) will start C) started
-If I finish my homework, I ________ TV. A) watch B) will watch C) watched
-If water reaches 100°C, it ________. A) boils B) will boil C) boiled
-If she doesn't hurry, she ________ the bus. A) misses B) will miss C) missed`;
+// spiral binding holes
+const binder = document.getElementById('binder');
+for(let i=0;i<16;i++){ const d=document.createElement('div'); d.className='hole'; binder.appendChild(d); }
 
-document.getElementById('raw').value = SAMPLE;
+function loadExample(){
+  document.getElementById('raw').value = `Put the verb in brackets into the correct form. Zero & First Conditionals If you ________ (heat) ice, it ________ (melt). If she ________ (study) hard, she will pass the exam. If people ________ (not drink) enough water, they become thirsty. If it ________ (rain) tomorrow, we will stay at home. If you ________ (mix) blue and yellow, you get green. If my father ________ (finish) work early, we will go to the cinema. If babies ________ (be) hungry, they cry. If I ________ (see) Tom later, I will tell him the news. If you ________ (not water) plants, they die. If they ________ (leave) now, they will arrive on time. 📝 Exercise 2 – Choose the correct answer If you press this button, the machine ________. A) starts B) will start C) started If I finish my homework, I ________ TV. A) watch B) will watch C) watched If water reaches 100°C, it ________. A) boils B) will boil C) boiled If she doesn't hurry, she ________ the bus. A) misses B) will miss C) missed`;
+}
+
+function clearAll(){
+  document.getElementById('raw').value='';
+  document.getElementById('output').style.display='none';
+  document.getElementById('output').innerHTML='';
+}
+
+function parseInput(rawText){
+  let text = rawText.replace(/\s+/g,' ').trim();
+
+  // strip common noise before the next "If " sentence
+  text = text.replace(/📝[\s\S]*?(?=If\s)/g, ' ');
+  text = text.replace(/Zero\s*&\s*First Conditionals/gi, ' ');
+  text = text.replace(/Put the verb[^.]*\./gi, ' ');
+  text = text.replace(/Exercise\s*\d+[^A-Za-z]*[A-Za-z ]*?(?=If\s)/gi, ' ');
+  text = text.replace(/\s+/g,' ').trim();
+
+  const chunks = text.split(/(?=\bIf\s)/g).map(s=>s.trim()).filter(Boolean);
+
+  return chunks.map(chunk=>{
+    if(/A\)/.test(chunk) && /B\)/.test(chunk)){
+      return parseMCQ(chunk);
+    }
+    return parseCloze(chunk);
+  });
+}
+
+function parseMCQ(chunk){
+  const idx = chunk.indexOf('A)');
+  const question = chunk.slice(0, idx).trim();
+  const rest = chunk.slice(idx);
+  const m = rest.match(/A\)\s*(.*?)\s*B\)\s*(.*?)\s*C\)\s*(.*)/s);
+  const options = m ? [m[1].trim(), m[2].trim(), m[3].trim()] : [rest.trim()];
+  return {type:'mcq', question, options};
+}
+
+function parseCloze(chunk){
+  const re = /_{2,}\s*\(([^)]+)\)/g;
+  let lastIndex = 0, m, parts = [];
+  while((m = re.exec(chunk))){
+    parts.push({text: chunk.slice(lastIndex, m.index), hint: m[1].trim()});
+    lastIndex = re.lastIndex;
+  }
+  parts.push({text: chunk.slice(lastIndex), hint: null});
+  return {type:'cloze', parts};
+}
 
 function escapeHtml(s){
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-function isMCQ(line){
-  return /\bA\)/.test(line) && /\bB\)/.test(line);
-}
-function isBlankLine(line){
-  return /_{3,}/.test(line);
-}
-function isHeading(line){
-  // short line, no blanks, no question mark ending typical sentence, or contains 'Exercise'
-  return !isMCQ(line) && !isBlankLine(line);
-}
-
-function buildBlankHtml(line, qIndex){
-  let i = 0;
-  const html = escapeHtml(line).replace(/_{3,}\s*\(([^)]+)\)/g, (m, hint) => {
-    i++;
-    return `<span class="blank-wrap">
-      <input class="blank-input" data-q="${qIndex}" data-b="${i}" placeholder="…">
-      <span class="hint">(${escapeHtml(hint)})</span>
-    </span>`;
+function renderCloze(item, num){
+  let html = `<div class="card"><span class="qnum">${num}.</span>`;
+  item.parts.forEach(p=>{
+    html += escapeHtml(p.text);
+    if(p.hint !== null){
+      html += `<span class="hint">(${escapeHtml(p.hint)})</span><input class="blank-input" type="text" placeholder="javob">`;
+    }
   });
+  html += `</div>`;
   return html;
 }
 
-function buildMcqHtml(line){
-  const parts = line.split(/(?=[A-D]\))/);
-  const stem = parts[0].trim();
-  const opts = parts.slice(1).map(p => {
-    const m = p.match(/^([A-D])\)\s*(.*)$/s);
-    return m ? {letter:m[1], text:m[2].trim()} : null;
-  }).filter(Boolean);
-  const stemHtml = escapeHtml(stem).replace(/_{3,}/, '<span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:70px;">&nbsp;</span>');
-  const optsHtml = opts.map(o =>
-    `<button type="button" class="opt-btn" onclick="selectOpt(this)"><span class="letter">${o.letter})</span>${escapeHtml(o.text)}</button>`
-  ).join('');
-  return `<div class="q-text">${stemHtml}</div><div class="opts">${optsHtml}</div>`;
+function renderMCQ(item, num, groupId){
+  let opts = item.options.map((opt,i)=>{
+    const letter = String.fromCharCode(65+i);
+    return `<button type="button" class="opt-btn" onclick="selectOpt(this,'${groupId}')"><span class="opt-letter">${letter})</span>${escapeHtml(opt)}</button>`;
+  }).join('');
+  return `<div class="card mcq"><span class="qnum">${num}.</span>${escapeHtml(item.question)}
+    <div class="options" data-group="${groupId}">${opts}</div></div>`;
 }
 
-function selectOpt(btn){
-  const group = btn.parentElement;
-  group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+function selectOpt(btn, groupId){
+  document.querySelectorAll(`.options[data-group="${groupId}"] .opt-btn`).forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
 }
 
-function render(){
-  const raw = document.getElementById('raw').value.trim();
-  const sheetEl = document.getElementById('sheet');
-  if(!raw){
-    sheetEl.innerHTML = '<div class="empty-hint">Avval matnni joylashtiring 🙂</div>';
-    sheetEl.classList.add('show');
-    return;
-  }
-  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+function build(){
+  const raw = document.getElementById('raw').value;
+  if(!raw.trim()){ return; }
+  const items = parseInput(raw);
+  const out = document.getElementById('output');
+  out.innerHTML = '';
 
-  let out = '';
-  let qCount = 0;
-  let sectionOpen = false;
+  // group consecutive same-type items into sections
+  let sections = [];
+  items.forEach(it=>{
+    const last = sections[sections.length-1];
+    if(last && last.type === it.type){ last.items.push(it); }
+    else { sections.push({type: it.type, items:[it]}); }
+  });
 
-  lines.forEach(line => {
-    if(isMCQ(line)){
-      qCount++;
-      out += `<div class="q-card"><div class="q-num">${qCount}</div>${buildMcqHtml(line)}</div>`;
-    } else if(isBlankLine(line)){
-      qCount++;
-      out += `<div class="q-card"><div class="q-num">${qCount}</div><div class="q-text">${buildBlankHtml(line, qCount)}</div></div>`;
+  let clozeCount = 0, mcqCount = 0, groupCounter = 0;
+  sections.forEach(sec=>{
+    if(sec.type === 'cloze'){
+      clozeCount++;
+      out.innerHTML += `<div class="section-title"><span class="tag">MASHQ ${clozeCount}</span> ✏️ Bo'sh joylarni to'ldiring</div>`;
+      sec.items.forEach((it,i)=>{ out.innerHTML += renderCloze(it, i+1); });
     } else {
-      // heading / section title / plain note
-      const cleaned = line.replace(/^📝\s*/, '');
-      if(!sectionOpen){
-        out += `<div class="sheet-title">${escapeHtml(cleaned)}</div>`;
-        sectionOpen = true;
-      } else {
-        qCount = 0; // reset numbering for new section
-        out += `</div><div class="section-block"><div class="plain-line">${escapeHtml(cleaned)}</div>`;
-      }
+      mcqCount++;
+      out.innerHTML += `<div class="section-title"><span class="tag">MASHQ ${mcqCount}</span> ✅ To'g'ri javobni tanlang</div>`;
+      sec.items.forEach((it,i)=>{
+        groupCounter++;
+        out.innerHTML += renderMCQ(it, i+1, 'g'+groupCounter);
+      });
     }
   });
 
-  sheetEl.innerHTML = `<div class="section-block">${out}</div>`;
-  sheetEl.classList.add('show');
+  out.style.display = 'block';
+  out.scrollIntoView({behavior:'smooth', block:'start'});
 }
-
-function clearAll(){
-  document.getElementById('raw').value = '';
-  const sheetEl = document.getElementById('sheet');
-  sheetEl.innerHTML = '';
-  sheetEl.classList.remove('show');
-}
-
-function printSheet(){
-  window.print();
-}
-
-render();
 </script>
 </body>
 </html>
